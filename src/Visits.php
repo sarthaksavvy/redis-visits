@@ -7,16 +7,17 @@ use Illuminate\Support\Facades\Redis;
 class Visits
 {
     protected $model;
+    protected $name;
 
     /**
      * Visits constructor.
      * @param $model
      * @param $name
      */
-    public function __construct($model)
+    public function __construct($model, $name = null)
     {
         $this->model = $model;
-        $this->name  = strtolower((new \ReflectionClass($model))->getShortName());
+        $this->name  = $name ?? strtolower((new \ReflectionClass($model))->getShortName());
     }
 
     public function record()

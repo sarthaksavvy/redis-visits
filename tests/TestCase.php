@@ -4,7 +4,6 @@ namespace Bitfumes\Visits\Tests;
 
 use Bitfumes\Visits\VisitsServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Redis;
 
 class TestCase extends BaseTestCase
 {
@@ -16,11 +15,6 @@ class TestCase extends BaseTestCase
         $this->loadFactories();
         $this->loadMigrations();
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-        Redis::del('127.0.0.1.testing_item.1');
-        Redis::del('127.0.0.1.testing_item.2');
-        Redis::del('testing_item');
-        Redis::del('testing_item.1.reads');
-        Redis::del('127.0.0.1.testing_item.1.reads');
     }
 
     protected function loadFactories()

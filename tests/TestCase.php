@@ -16,11 +16,11 @@ class TestCase extends BaseTestCase
         $this->loadFactories();
         $this->loadMigrations();
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-        Redis::del('127.0.0.1.items.1');
-        Redis::del('127.0.0.1.items.2');
-        Redis::del('items');
-        Redis::del('item.1.reads');
-        Redis::del('127.0.0.1.item.1.reads');
+        Redis::del('127.0.0.1.testing_item.1');
+        Redis::del('127.0.0.1.testing_item.2');
+        Redis::del('testing_item');
+        Redis::del('testing_item.1.reads');
+        Redis::del('127.0.0.1.testing_item.1.reads');
     }
 
     protected function loadFactories()

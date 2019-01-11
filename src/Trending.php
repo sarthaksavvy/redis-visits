@@ -6,45 +6,48 @@ use Illuminate\Support\Facades\Redis;
 
 class Trending
 {
-    public function get($key)
+    public $key;
+
+    public function forKey($key = null)
     {
-        return array_map('json_decode', Redis::zrevrange($key, 0, 4));
+        $this->key = $key;
+        return $this;
     }
 
-    public function set($key, $item)
+    public function get()
+    {
+        return array_map('json_decode', Redis::zrevrange($this->key, 0, 4));
+    }
+
+    public function record($item)
     {
         if ($this->checkIp($item->id)) {
             return false;
         }
 
-        Redis::zincrby($key, 1, json_encode([
+        Redis::zincrby($this->key, 1, json_encode([
             'title' => $item->title,
             'path'  => $item->path,
         ]));
         $this->storeIp($item->id);
     }
 
-    public function reset($key)
+    public function reset()
     {
-        Redis::del($key);
+        Redis::del($this->key);
     }
 
-    public function removeFromList($key, $item=null)
+    public function removeFromList($item=null)
     {
-        Redis::zrem($key, json_encode([
+        Redis::zrem($this->key, json_encode([
             'title' => $item->title,
             'path'  => $item->path
         ]));
     }
 
-    protected function cacheKey()
-    {
-        return 'items';
-    }
-
     protected function IpKey($itemId)
     {
-        return "{$_SERVER['REMOTE_ADDR']}.{$this->cacheKey()}.{$itemId}";
+        return "{$_SERVER['REMOTE_ADDR']}.{$this->key}.{$itemId}";
     }
 
     protected function storeIp($itemId)

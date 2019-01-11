@@ -14,8 +14,8 @@ class TrendingTest extends TestCase
         $trending  = new Trending;
         $item      = factory(Item::class)->create();
         $item2     = factory(Item::class)->create();
-        $trending->set('items', $item);
-        $trending->set('items', $item2);
+        $trending->forKey('testing_item')->record($item);
+        $trending->forKey('testing_item')->record($item2);
         $this->assertEquals(2, count($trending->get('items')));
     }
 
@@ -24,7 +24,7 @@ class TrendingTest extends TestCase
     {
         $trending  = new Trending;
         $item      = factory(Item::class)->create();
-        $trending->set('items', $item);
+        $trending->forKey('testing_item')->record($item);
         $trending->reset('items');
         $this->assertEquals(0, count($trending->get('items')));
     }
@@ -34,13 +34,13 @@ class TrendingTest extends TestCase
     {
         $trending          = new Trending;
         $item              = factory(Item::class)->create();
-        $trending->set('items', $item);
+        $trending->forKey('testing_item')->record($item);
 
         $item2              = factory(Item::class)->create();
-        $trending->set('items', $item2);
+        $trending->forKey('testing_item')->record($item2);
 
         $this->assertEquals(2, count($trending->get('items')));
-        $trending->removeFromList('items', $item);
+        $trending->removeFromList($item);
         $this->assertEquals(1, count($trending->get('items')));
     }
 }

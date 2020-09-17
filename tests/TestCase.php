@@ -7,7 +7,7 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
 {
-    public function setup()
+    public function setup():void
     {
         parent::setUp();
         $this->withoutExceptionHandling();
@@ -33,6 +33,7 @@ class TestCase extends BaseTestCase
     {
         $app['config']->set('app.key', 'AckfSECXIvnK5r28GVIWUAxmbBSjTsmF');
         $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.redis.client', 'predis');
         $app['config']->set('database.connections.testing', [
             'driver'   => 'sqlite',
             'database' => ':memory:',

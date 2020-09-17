@@ -2,14 +2,14 @@
 
 namespace Bitfumes\Visits\Tests\Unit;
 
-use Bitfumes\Visits\Tests\TestCase;
-use Bitfumes\Visits\Tests\Dummy\Models\Item;
 use Bitfumes\Visits\Visits;
+use Bitfumes\Visits\Tests\TestCase;
 use Illuminate\Support\Facades\Redis;
+use Bitfumes\Visits\Tests\Dummy\Models\Item;
 
 class VisitsTest extends TestCase
 {
-    public function setup()
+    public function setup():void
     {
         parent::setUp();
         Redis::del('testing_item.1.reads');
